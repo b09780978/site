@@ -1,0 +1,5 @@
+STUDENT : 學生資料	==> STUDENT107A
+CLASS  :  課程有哪些學生	==> CLASS107A
+CLASSNAME  : 課程中文名稱	==> CLASSNAME107A
+
+CREATE TABLE `course`.`COURSEMAP` ( `class_id` VARCHAR(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , `cname` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_general_ci;

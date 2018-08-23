@@ -1,0 +1,62 @@
+<?php
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+class CreateStudentTableController extends Controller
+{
+	public function showForm()
+	{
+		return view('createStudentTable');
+	}
+
+	public function create(Request $request)
+	{
+		$year = $request->input('year');
+		$semester = $request->input('semester');
+		$blocks = $request->input('blocks', []);
+		$prefix = $request->input('prefix');
+		$classTable = array();
+		$statu = 'success';
+		$message = '';
+
+		// 加入課程對應表
+		try
+		{
+			$counter = DB::table('COURSEMAP')->where('class_id', 'LIKE', '%' .  $prefix . '%')->count();
+			for($i=0;$i<count($blocks);$i++)
+			{
+				$classTable[$prefix . ($i+1)] = [
+					'cname' => $blocks[$i]['cname'], 
+					'week' => $blocks[$i]['week'], 
+				];
+
+				$courseMap = array($prefix . $counter, $blocks[$i]['cname'], $blocks[$i]['week']);
+				DB::transaction(function() use($courseMap) {
+					DB::insert('INSERT INTO `coursemap` (`class_id`, `cname`, `week`) VALUES (?, ?, ?)', $courseMap);
+				});
+				$counter++;
+			}
+		}
+		catch(\Exception $e)
+		{
+			//$message .= $e->getMessage();
+			$message = '發生錯誤，請聯絡管理員';
+			$statu = 'error';
+		}
+
+		return response()
+				->json( [ 'statu' => $statu,
+					 'result' => $classTable,
+					 'message' => $message,
+					  ])
+				->withHeaders([ 'Content-Type' => 'text/json']);
+	}
+}
+
+?>
