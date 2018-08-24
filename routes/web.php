@@ -18,7 +18,83 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 Route::get('/', function () {
-	return view('index');
+	$statu = true;
+	try
+	{
+		$database_check = DB::select('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=?', [ 'COURSE', ]);
+
+		// Create database COURSE
+		if(empty($database_check))
+		{
+			$statu = DB::connection()->statement('CREATE DATABASE COURSE');
+		}
+
+		// Create table COURSE
+		if(!Schema::hasTable('course'))
+		{
+			$tableName = 'COURSE';
+			Schema::create($tableName, function($table){
+                    $table->string('student_id', 20);
+                    $table->string('year', 20);
+                    $table->string('class', 20)->nullable();
+                    $table->integer('grade')->nullable();
+                    $table->integer('class_index')->nullable();
+                    $table->integer('number')->nullable();
+                    $table->string('name', 30)->nullable();
+                    $table->string('sex', 10)->nullable();
+                    $table->string('social_id', 20)->nullable();
+                    $table->date('birthday')->nullable();
+                    $table->text('address')->nullable();
+                    $table->text('phone')->nullable();
+                    $table->string('guardian', 20)->nullable();
+                    $table->string('emergency_phone', 20)->nullable();
+    
+                    $table->primary(['student_id', 'year']);
+    
+                    $table->engine = 'InnoDB';
+                    $table->charset = 'utf8';
+                    $table->collation = 'utf8_general_ci';
+            });
+		}
+
+		// Create table COURSEMAP 
+		if(!Schema::hasTable('COURSEMAP'))
+		{
+			$tableName = 'COURSEMAP';
+            Schema::create($tableName, function($table){
+                    $table->string('class_id', 20);
+                    $table->text('cname');
+                    $table->integer('week');
+            
+                    $table->primary('class_id');
+            
+                    $table->engine = 'InnoDB';
+                    $table->charset = 'utf8';
+                    $table->collation = 'utf8_general_ci';
+            });
+		}
+
+		if(!Schema::hasTable('COURSE'))
+		{
+			// Create table COURSE
+			$tableName = 'COURSE';
+			Schema::create($tableName, function($table){
+                    $table->string('class_id', 20);
+                    $table->string('student_id', 20);
+                    $table->engine = 'InnoDB';
+                    $table->charset = 'utf8';
+                    $table->collation = 'utf8_general_ci';
+            });
+		}
+
+	}
+	catch(\Exception $e)
+	{
+		$statu = false;
+		$statu = $e->getMessage();
+	}
+
+	return view('index', [ 'a' => $statu, ] );
 });
 
 /*
