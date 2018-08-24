@@ -30,9 +30,9 @@ Route::get('/', function () {
 		}
 
 		// Create table COURSE
-		if(!Schema::hasTable('course'))
+		if(!Schema::hasTable('STUDENT'))
 		{
-			$tableName = 'COURSE';
+			$tableName = 'STUDENT';
 			Schema::create($tableName, function($table){
                     $table->string('student_id', 20);
                     $table->string('year', 20);
