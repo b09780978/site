@@ -21,14 +21,6 @@ Route::get('/', function () {
 	$statu = true;
 	try
 	{
-		$database_check = DB::select('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=?', [ 'COURSE', ]);
-
-		// Create database COURSE
-		if(empty($database_check))
-		{
-			$statu = DB::connection()->statement('CREATE DATABASE COURSE');
-		}
-
 		// Create table COURSE
 		if(!Schema::hasTable('STUDENT'))
 		{

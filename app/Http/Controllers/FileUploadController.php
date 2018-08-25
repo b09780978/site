@@ -40,17 +40,19 @@ class FileUploadController extends Controller
 
 		$filePath = $file->getRealPath();
 		$prefix = $year . $semester;
+		$digitMap = [ '一' => 1, '二' => 2, '三' => 3,  '四' => 4, '五' => 5,
+					'六' => 6, '七' => 7, '八' => 8, '九' => 9, '十' => 10,  ];
 
 		try
 		{
 			$reader = IOFactory::load($filePath);
 
-			for($table=0;$table<6;$table++)
+			for($table=0;$table<1;$table++)
 			{
 				$reader->setActiveSheetIndex($table);
 				$sheet = $reader->getActiveSheet();
 				$rows = $sheet->getHighestRow();
-				$columns = 'M';
+				$columns = 'N';
 
 				for($row=2;$row<=$rows;$row++)
 				{
@@ -58,25 +60,43 @@ class FileUploadController extends Controller
 					for($column='A';$column<=$columns;$column++)
 					{
 						$data = null;
-						if($column==='I')
+						switch($column)
 						{
-							$birthday = $sheet->getCell($column . $row)->getFormattedValue();
-							$data = date('Y-m-d', strtotime($birthday));
+							case 'F':
+							case 'L':
+							case 'M':
+								break;
+
+							case 'B':
+								$data = $sheet->getCell($column, $row)->getValue();
+								$grade = digitMap[mb_substr($data, 0, 1, 'UTF-8')];
+								$class_index = digitMap[mb_substr($data, 2, 1, 'UTF-8')];
+								$grade = 10000;
+								$class_index = 999999;
+								array_push($student, $data);
+								array_push($student, $grade);
+								array_push($student, $class_index);
+								break;
+							case 'H':
+								$birthday = $sheet->getCell($column . $row)->getFormattedValue();
+								$data = date('Y-m-d', strtotime($birthday));
+								array_push($student, $data);
+								break;
+							default:
+								$data = $sheet->getCell($column . $row)->getValue();
+								array_push($student, $data);
 						}
-						else
-						{
-							$data = $sheet->getCell($column . $row)->getValue();
-						}
-						array_push($student, $data);
 					}
 					
 					//Use transaction
+					/*
 					DB::transaction(function() use ($student){
 						DB::insert('INSERT INTO `student` ( `year`,`student_id`, `class`, `grade`, `class_index`, `number`, `name`, `sex`, `social_id`, `birthday`, `address`, `phone`, `guardian`, `emergency_phone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $student);
 					});
+					*/
 				}
 			}
-				return back()->with('success', '上傳資料庫完成');
+				return back()->with('success', '1: ' . print_r($student, true));
 		}
 		catch(\Exception $e)
 		{
