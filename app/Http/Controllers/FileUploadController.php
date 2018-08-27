@@ -72,7 +72,7 @@ class FileUploadController extends Controller
 					
 					//Use transaction
 					DB::transaction(function() use ($student){
-						DB::insert('INSERT INTO `student` ( `year`,`student_id`, `class`, `grade`, `class_index`, `number`, `name`, `sex`, `social_id`, `birthday`, `address`, `phone`, `guardian`, `emergency_phone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $student);
+						DB::insert('INSERT INTO `STUDENT` ( `year`,`student_id`, `class`, `grade`, `class_index`, `number`, `name`, `sex`, `social_id`, `birthday`, `address`, `phone`, `guardian`, `emergency_phone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $student);
 					});
 				}
 			}
