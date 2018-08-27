@@ -111,14 +111,14 @@ Route::get('/class', function(Request $request){
 
 Route::get('/class/{year}/{semester}', function($year, $semester){
 	$prefix = $year . $semester;
-	$students = DB::select('SELECT * FROM student WHERE year=:year ORDER BY grade, class_index, number',
+	$students = DB::select('SELECT * FROM STUDENT WHERE year=:year ORDER BY grade, class_index, number',
 			[ 'year' => $prefix,  ]);
 	return view('class', [ 'year' => $year, 'semester' => $semester, 'students' => $students ] );
 });
 
 Route::get('/class/{year}/{semester}/{grade}/{class_index}', function ($year, $semester, $grade, $class_index) {
 	$prefix = $year . $semester;
-	$students = DB::select('SELECT * FROM student WHERE grade=:grade and class_index=:class_index and year=:year ORDER BY number',
+	$students = DB::select('SELECT * FROM STUDENT WHERE grade=:grade and class_index=:class_index and year=:year ORDER BY number',
 			[ 'grade' => $grade, 'class_index' => $class_index, 'year' => $prefix,  ]);
 	return view('class', [ 'year' => $year, 'semester' => $semester, 'students' => $students, ]);
 });
