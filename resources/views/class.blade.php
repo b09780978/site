@@ -86,7 +86,7 @@
 					{
 				?>
 					<tr>
-						<td><button class="btn btn-primary" type="button"><a href="<?php echo '/site/select/' . $year . '/' . $semester . '/' . $student->student_id;  ?>"><font class="text-light">選課去</font></a></button></td>
+						<td><button class="btn btn-primary" type="button"><a href="<?php echo '/site/select/' . $year . '/' . $semester . '/' . $student->student_id;  ?>", target="_blank"><font class="text-light">選課去</font></a></button></td>
 				<?php
 						echo '<td>' . $student->student_id . '</td>';
 						echo '<td>' . $student->class . '</td>';
