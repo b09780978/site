@@ -58,7 +58,7 @@ class FileUploadController extends Controller
 					for($column='A';$column<=$columns;$column++)
 					{
 						$data = null;
-						if($column==='H')
+						if($column==='I')
 						{
 							$birthday = $sheet->getCell($column . $row)->getFormattedValue();
 							$data = date('Y-m-d', strtotime($birthday));
