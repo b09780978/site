@@ -81,7 +81,7 @@ class CreateStudentTableController extends Controller
 
 				for($i=0;$i<$total_course;$i++)
 				{
-					DB::insert('INSERT INTO `coursemap` (`class_id`, `cname`, `week`) VALUES (?, ?, ?)', [
+					DB::insert('INSERT INTO `COURSEMAP` (`class_id`, `cname`, `week`) VALUES (?, ?, ?)', [
 						$classTable[$i]['class_id'], $classTable[$i]['cname'], $classTable[$i]['week'],	
 					]);	
 				}
