@@ -84,8 +84,22 @@
 				echo '<td>' . $student->class . '</td>';
 				echo '<td>' . $student->number . '</td>';
 				echo '<td>' . $student->name . '</td>';
+				//echo '<td>' . count($student->cid) . '</td>';
+				if(count($student->cid) === 0)
+				{
+					echo '<td>空</td>';
+				}
+				else
+				{
+					$choose = array();
+					foreach($student->cid as $obj)
+					{
+						array_push($choose, $course[$obj->class_id]);
+					}
+					//$choose .= $student->cid;
+					echo '<td>' . join(',', $choose) . '</td>';
+				}
 			?>
-				<td>空</td>
 			</tr>
 			<?php
 				}

@@ -28,15 +28,28 @@ class StudentSelectController extends Controller
 					->where('class_index', '=', $class_index)
 					->orderBy('number')
 					->get();
-		$message = $student;
 
-		return view('classDetail', [ 'students' => $student, 'message' => $message ]);
+		$course_query = DB::table('COURSEMAP')
+				->select('class_id', 'cname')
+				->where('class_id', 'LIKE', '%' . $prefix . '%')
+				->get();
+
+		foreach($student as $s)
+		{
+			$cid = DB::table('COURSE')
+				->where('student_id', '=', $s->student_id)
+				->get();
+			$s->cid = $cid;
+		}
+		$course = array();
+		foreach($course_query as $c)
+		{
+			$course[$c->class_id] = $c->cname;
+		}
+
+		return view('classDetail', [ 'students' => $student, 'course' => $course ]);
 	}
 
-	public function getResult()
-	{
-
-	}
 }
 
 ?>

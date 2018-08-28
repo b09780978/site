@@ -29,16 +29,16 @@
 					<a class="nav-link text-white" href="/site/class">學生選課</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link text-white" href="/site/class/detail">班級選課結果查詢</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link text-white" href="/site/upload">上傳學生資料</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-white" href="/site/createStudentTable">建立課程</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link text-white" href="/site/course">課程查詢</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-white" href="/site/class/detail">班級查詢</a>
+					<a class="nav-link text-white" href="/site/course">課程名單查詢</a>
 				</li>
 			</ul>
 

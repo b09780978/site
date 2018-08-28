@@ -236,6 +236,7 @@ Route::get('/course/detail/{class_id}', function($class_id){
 							->select('STUDENT.student_id', 'STUDENT.class', 'STUDENT.number', 'STUDENT.name')
 							->where('class_id', '=', $class_id)
 							->distinct()
+							->orderBy('class')
 							//->groupBy('student_id')
 							->get();
 	}
