@@ -97,11 +97,17 @@ Route::get('/class', function(Request $request){
 	$semester = $request->query('semester', '');
 	$grade = $request->query('grade', '');
 	$class_index = $request->query('class_index', '');
+	$all_class = $request->query('all_class', '');
 
 	if( (strlen($year) === 0) || (strlen($semester)===0) || (strlen($grade)===0) || (strlen($class_index)===0)  )
 	{
 		$students = array();
 		return view('class', [ 'students' => $students ] );
+	}
+	else if( $all_class === 'y')
+	{
+		$students = DB::select('select * FROM STUDENT WHERE year=? ORDER BY student_id', [ $year . $semester, ]);
+		return view('class', [ 'students' => $students, 'year' => $year, 'semester' => $semester, ]);
 	}
 	else
 	{
@@ -262,3 +268,53 @@ Route::get('/course/detail/{class_id}', function($class_id){
 });
 
 Route::get('/class/detail', 'StudentSelectController@index');
+
+Route::get('/courseEdit', function(Request $request){
+	$year = $request->query('year', '');
+	$semester = $request->query('semester', '');
+	$prefix = $year . $semester;
+	$course = array();
+	
+	if(strlen($prefix) !== 0)
+	{
+		$course = DB::table('COURSEMAP')
+				->where('class_id', 'like', '%' . $prefix . '%')
+				->orderBy('week')
+				->get();
+	}
+
+	//$message = print_r($course, true);
+
+	return view('courseEdit', [ 'courses' => $course, ] );
+});
+
+Route::get('/dropStudent', function(){
+	return view('/dropStudent');
+});
+Route::post('/dropStudent', function(Request $request){
+	$year = $request->input('year', '');
+	$semester = $request->input('semester', '');
+	$message = '刪除成功';
+
+	if( (strlen($year) === 0) || (strlen($semester) === 0) )
+	{
+		return back()->with('error', '輸入錯誤');
+	}
+
+	$prefix = $year . $semester;
+	try
+	{
+		DB::transaction(function() use($prefix){
+			DB::table('STUDENT')
+				->where('year', '=', $prefix)
+				->delete();
+		});
+	}
+	catch(\Exception $e)
+	{
+		$message = $e->getMessage();
+		return back()->with('error', $message);
+	}
+
+	return back()->with('success', $message);
+});

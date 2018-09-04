@@ -20,7 +20,7 @@
 			</div>
     
 			<div class="form-group">
-				<label for="semester">學期</label>
+				<label>學期</label>
     
 				<div class="form-check form-check-inline">
 					<input class="form-check-input" checked="checked" type="radio" name="semester" id="semesterA" value="A">
@@ -55,6 +55,14 @@
 					</script>
 				</select>
 			</div>
+
+			<div class="form-group">
+				<label>選擇全部</label>
+				<input class="form-check form-check-inline" type="radio" name="all_class" value="y">
+				<label class="form-check-label" for="all_class">是</label>
+				<input class="form-check-form-check-inline" type="radio" name="all_class" checked="checked" value="n">
+				<label class="form-cehck-label" for="all_class" >否</label>
+			</div>
     
 			<div class="form-group">
 				<button class="btn btn-primary">查詢</button>
@@ -86,7 +94,10 @@
 					{
 				?>
 					<tr>
-						<td><button class="btn btn-primary" type="button"><a href="<?php echo '/site/select/' . $year . '/' . $semester . '/' . $student->student_id;  ?>", target="_blank"><font class="text-light">選課去</font></a></button></td>
+						<td>
+							<button class="btn btn-primary" type="button"><a href="<?php echo '/site/select/' . $year . '/' . $semester . '/' . $student->student_id;  ?>" target="_blank"><font class="text-light">選課</font></a></button>
+							<button class="btn btn-primary" type="button"><a href="<?php echo '/site/student/edit/' . $year . '/' . $semester . '/' . $student->student_id; ?>" target="_blank"><font class="text-light">編輯</font></a></button>
+						</td>
 				<?php
 						echo '<td>' . $student->student_id . '</td>';
 						echo '<td>' . $student->class . '</td>';

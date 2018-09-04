@@ -40,6 +40,12 @@
 				<li class="nav-item">
 					<a class="nav-link text-white" href="/site/course">課程名單查詢</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="/site/courseEdit">課程編輯</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="/site/dropStudent">刪除學生資料</a>
+				</li>
 			</ul>
 
 			<form class="form-inline my-2 my-lg-0">
