@@ -45,37 +45,35 @@ class FileUploadController extends Controller
 		{
 			$reader = IOFactory::load($filePath);
 
-			for($table=0;$table<6;$table++)
-			{
-				$reader->setActiveSheetIndex($table);
-				$sheet = $reader->getActiveSheet();
-				$rows = $sheet->getHighestRow();
-				$columns = 'N';
+			//$reader->setActiveSheetIndex($table);
+			$sheet = $reader->getActiveSheet();
+			$rows = $sheet->getHighestRow();
+			$columns = 'N';
 
-				for($row=2;$row<=$rows;$row++)
+			for($row=2;$row<=$rows;$row++)
+			{
+				$student = array( $prefix );
+				for($column='A';$column<=$columns;$column++)
 				{
-					$student = array( $prefix );
-					for($column='A';$column<=$columns;$column++)
+					$data = null;
+					if($column==='I')
 					{
-						$data = null;
-						if($column==='I')
-						{
-							$birthday = $sheet->getCell($column . $row)->getFormattedValue();
-							$data = date('Y-m-d', strtotime($birthday));
-						}
-						else
-						{
-							$data = $sheet->getCell($column . $row)->getValue();
-						}
-						array_push($student, $data);
+						$birthday = $sheet->getCell($column . $row)->getFormattedValue();
+						$data = date('Y-m-d', strtotime($birthday));
 					}
-					
-					//Use transaction
-					DB::transaction(function() use ($student){
-						DB::insert('INSERT INTO `STUDENT` ( `year`,`student_id`, `class`, `grade`, `class_index`, `number`, `name`, `sex`, `social_id`, `birthday`, `address`, `phone`, `guardian`, `emergency_phone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $student);
-					});
+					else
+					{
+						$data = $sheet->getCell($column . $row)->getValue();
+					}
+					array_push($student, $data);
 				}
+				
+				//Use transaction
+				DB::transaction(function() use ($student){
+					DB::insert('INSERT INTO `STUDENT` ( `year`,`student_id`, `class`, `grade`, `class_index`, `number`, `name`, `sex`, `social_id`, `birthday`, `address`, `phone`, `guardian`, `emergency_phone`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', $student);
+				});
 			}
+
 				return back()->with('success', '上傳資料庫完成');
 		}
 		catch(\Exception $e)
