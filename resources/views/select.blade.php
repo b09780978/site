@@ -56,10 +56,18 @@
 				<label class="form-check-label" for="ii">不參加</label>
 			</div>
 
-			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="c0" value="<?php echo $course[0]->class_id; ?>" id="i0">
-				<label class="form-check-label" for="i0">課照班</label>
-			</div>
+			<?php
+				foreach($course as $c)
+				{
+					if($c->week === 0)
+					{
+						echo '<div class="form-check form-check-inline">';
+						echo '<input class="form-check-input" type="radio" name="c0" value="' . $c->class_id .'" id="i0">';
+						echo '<label class="form-check-label" for="i0">' . $c->cname . '</label>';
+						echo '</div>';
+					}
+				}
+			?>
 		</div>
 
 		<?php
