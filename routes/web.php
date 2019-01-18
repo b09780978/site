@@ -242,7 +242,10 @@ Route::get('/course/detail/{class_id}', function($class_id){
 							->select('STUDENT.student_id', 'STUDENT.class', 'STUDENT.number', 'STUDENT.name')
 							->where('class_id', '=', $class_id)
 							->distinct()
-							->orderBy('class')
+							//->orderBy('class')
+							->orderBy('grade')
+							->orderBy('class_index')
+							->orderBy('number')
 							//->groupBy('student_id')
 							->get();
 	}
@@ -317,4 +320,9 @@ Route::post('/dropStudent', function(Request $request){
 	}
 
 	return back()->with('success', $message);
+});
+
+Route::get('test', function() {
+	$students = DB::select('select * FROM STUDENT WHERE year=? ORDER BY student_id', [ "107A" ]);
+	return view('test', [ 'students' => $students, 'year' => 107, 'semester' => 'A' ]);
 });

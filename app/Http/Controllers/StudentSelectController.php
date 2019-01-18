@@ -38,6 +38,7 @@ class StudentSelectController extends Controller
 		{
 			$cid = DB::table('COURSE')
 				->where('student_id', '=', $s->student_id)
+				->where('class_id', 'LIKE', '%' . $prefix . '%')
 				->get();
 			$s->cid = $cid;
 		}

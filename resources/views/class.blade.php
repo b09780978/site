@@ -96,8 +96,10 @@
 					<tr>
 						<td>
 							<button class="btn btn-primary" type="button"><a href="<?php echo '/site/select/' . $year . '/' . $semester . '/' . $student->student_id;  ?>" target="_blank"><font class="text-light">選課</font></a></button>
+						<!--
 							<button class="btn btn-primary" type="button"><a href="<?php echo '/site/student/edit/' . $year . '/' . $semester . '/' . $student->student_id; ?>" target="_blank"><font class="text-light">編輯</font></a></button>
 						</td>
+						-->
 				<?php
 						echo '<td>' . $student->student_id . '</td>';
 						echo '<td>' . $student->class . '</td>';
