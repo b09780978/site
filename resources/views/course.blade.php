@@ -44,6 +44,7 @@
 		<tr>
 			<th>星期</th>
 			<th>課程名稱</th>
+			<th>人數</th>
 			<th>選項</th>
 		</tr>
 	</thead>
@@ -57,6 +58,7 @@
 			<?php
 				echo '<td>' . $c->week . '</td>';
 				echo '<td>' . $c->cname . '</td>';
+				echo '<td>' . $c->counter . '</td>';
 				echo '<td><button class="btn btn-primary"><a href="/site/course/detail/' . $c->class_id .'"><font class="text-light">前往</font></a></button></td>';
 			?>
 			</tr>

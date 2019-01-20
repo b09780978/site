@@ -226,6 +226,11 @@ Route::get('/course', function(Request $request){
 		$courseList = DB::select('SELECT class_id, cname, week FROM COURSEMAP WHERE class_id LIKE concat("%", :prefix, "%") ORDER BY week', [
 			'prefix' => $prefix,	
 		]);
+		foreach($courseList as $cl){
+			$cl->counter = DB::table('COURSE')
+      					->where('class_id', '=', $cl->class_id)
+					->count();
+		}
 	}
 
 	return view('course', [ 'course' => $courseList, 'courseName' => '尚未選擇課程', ]);
