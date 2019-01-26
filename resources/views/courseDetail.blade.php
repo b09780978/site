@@ -15,6 +15,9 @@
 			<th>班級</th>
 			<th>座號</th>
 			<th>姓名</th>
+			<th>聯絡人</th>
+			<th>連絡電話</th>
+			<th>緊急連絡電話</th>
 		</tr>
 	</thead>
 
@@ -29,6 +32,9 @@
 			echo '<td>' . $member->class . '</td>';
 			echo '<td>' . $member->number . '</td>';
 			echo '<td>' . $member->name . '</td>';
+			echo '<td>' . $member->guardian . '</td>';
+			echo '<td>' . $member->phone . '</td>';
+			echo '<td>' . $member->emergency_phone . '</td>';
 		?>
 		</tr>
 		<?php

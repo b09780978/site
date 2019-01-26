@@ -3,6 +3,7 @@
 @section('title', '課程編輯')
 
 @section('content')
+	<h1><strong>功能尚未完成</strong></h1>
 	<form method="GET" action="/site/courseEdit" class="form-inline">
 		<div class="form-group">
 			<label for="year">學年</label>
