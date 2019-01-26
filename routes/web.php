@@ -57,6 +57,8 @@ Route::get('/', function () {
                     $table->string('class_id', 20);
                     $table->text('cname');
                     $table->integer('week');
+		    $table->text('address');
+		    $table->integer('cost');
             
                     $table->primary('class_id');
             
@@ -159,6 +161,7 @@ Route::get('/select/{year}/{semester}/{student_id}', function($year, $semester, 
 	}
 	catch(\Exception $e)
 	{
+		$student = array();
 		$student['error_message'] = $e->getMessage();
 	}
 
@@ -211,6 +214,47 @@ Route::post('/select', function(Request $request){
 	{
 		return back()->with('error', '操作失敗');
 	}
+});
+
+Route::get('/selectId', function(){
+	return view('selectId');
+});
+
+Route::post('/selectId', function(Request $request){
+	$year = $request->input('year', '');
+	$semester = $request->input('semester', '');
+	$studentId = $request->input('studentId', '');
+	$prefix = $year . $semester;
+
+	if( strlen($year) == 0 || strlen($semester) == 0 || strlen($studentId) == 0)
+	{
+		//return back()->with('error', '學號不可空白');
+		return back()->with('error', 'student' . $studentId);
+	}
+
+	$student = null;
+
+	try
+	{
+		$student = DB::table('STUDENT')
+			->where('student_id', '=', $studentId)
+			->where('year', '=', $prefix)
+			->get();
+	}
+	catch(\Exception $e)
+	{
+		$student = null;
+	}
+	
+	if($student === null || $student->count() == 0)
+	{
+		return back()->with('error', '查無此學號');
+	}	
+	else
+	{
+		return redirect('select/' . $year . '/' . $semester . '/' . $studentId);
+	}
+
 });
 
 Route::get('/course', function(Request $request){

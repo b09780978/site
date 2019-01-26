@@ -26,7 +26,10 @@
 		<div class="collapse navbar-collapse" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link text-white" href="/site/class">學生選課</a>
+					<a class="nav-link text-white" href="/site/class">學生選課(班級)</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="/site/selectId">學生選課(學號)</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link text-white" href="/site/class/detail">班級選課結果查詢</a>
@@ -44,11 +47,6 @@
 					<a class="nav-link text-white" href="/site/courseEdit">課程編輯</a>
 				</li>
 
-				<!--
-				<li class="nav-item">
-					<a class="nav-link text-white" href="/site/dropStudent">刪除學生資料</a>
-				</li>
-				-->
 			</ul>
 
 			<form class="form-inline my-2 my-lg-0">
